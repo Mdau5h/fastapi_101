@@ -6,7 +6,7 @@ from database.query import Query
 
 create_notes_table = '''
 CREATE TABLE IF NOT EXISTS notes (
-		id INTEGER PRIMARY KEY,
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		title VARCHAR,
 		content VARCHAR
 	);

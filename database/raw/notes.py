@@ -1,7 +1,24 @@
 from database.query import Query
 
 
-def create_or_update_note_query(id_: int, title: str, content: str) -> Query:
+def create_note_query(title: str, content: str) -> Query:
+    bound_params = {
+        'title': title,
+        'content': content,
+    }
+
+    query = Query(
+        '''
+        INSERT INTO notes(title, content)
+        VALUES(:title, :content)
+        ''',
+        bound_params,
+    )
+
+    return query
+
+
+def update_note_query(id_: int, title: str, content: str) -> Query:
     bound_params = {
         'id': id_,
         'title': title,
@@ -10,15 +27,13 @@ def create_or_update_note_query(id_: int, title: str, content: str) -> Query:
 
     query = Query(
         '''
-        INSERT INTO notes(id, title, content)
-        VALUES(:id, :title, :content)
-        ON CONFLICT(id) DO UPDATE SET title=:title, content=:content;
+        UPDATE notes
+        SET title=:title, content=:content WHERE id=:id;
         ''',
         bound_params,
     )
 
     return query
-
 
 def get_note_by_id_query(id_: int) -> Query:
     bound_params = {
