@@ -10,7 +10,7 @@ def create_note_query(title: str, content: str) -> Query:
     query = Query(
         '''
         INSERT INTO notes(title, content)
-        VALUES(:title, :content)
+        VALUES(:title, :content);
         ''',
         bound_params,
     )
