@@ -1,20 +1,14 @@
 from fastapi import FastAPI, HTTPException
-from typing import List
 import uvicorn
-from database.models import Note
+import logging
 
-db:List[Note] = [
-    Note(
-        id=0,
-        title="aaa",
-        content="bbb"
-    ),
-    Note(
-        id=1,
-        title="ccc",
-        content="ddd"
-    )
-]
+from database.create import rollout as init_db
+from database.models import Note
+from database.ext.notes import get_note_by_id, create_note, get_all_notes, delete_note_by_id
+
+from app.logger import init_logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -24,20 +18,40 @@ async def home():
 
 @app.get("/api/v1/notes")
 async def get_notes():
-    return db
+    return get_all_notes()
+
+@app.get("/api/v1/notes/{note_id}")
+async def get_note(note_id: int):
+    note_in_db = get_note_by_id(note_id)
+    if note_in_db:
+        return note_in_db
+    raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
+
 
 @app.post("/api/v1/notes", status_code=201)
-async def create_note(note: Note):
-    db.append(note)
+async def post_note(note: Note):
+    # todo: exclude id in request
+    # todo: new model for request?
+    create_note(
+        title=note.title,
+        content=note.content
+    )
+    # todo: return note_id
     return note
 
 @app.delete("/api/v1/notes/{note_id}", status_code=204)
 async def delete_note(note_id: int):
-    for note in db:
-        if note.id == note_id:
-            db.remove(note)
-            return
+    note_in_db = get_note_by_id(note_id)
+    if note_in_db:
+        delete_note_by_id(note_id)
+        return
     raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
-if __name__ == '__main__':
+def main() -> None:
+    init_logging()
+    init_db()
+    logger.info('database is ready')
     uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
+
+if __name__ == '__main__':
+    main()
