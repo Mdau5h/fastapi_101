@@ -38,9 +38,7 @@ def get_all_notes() -> list[Note]:
         return notes
 
 
-def delete_note_by_id(note_id: int) -> t.Optional[Note]:
+def delete_note_by_id(note_id: int) -> None:
     q = delete_notes_by_id_query(note_id)
     with session() as s:
-        r = s.execute(q).fetchone()
-        if r:
-            return Note(*r)
+        s.execute(q).fetchone()
