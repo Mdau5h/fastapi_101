@@ -41,7 +41,7 @@ def get_note_by_id_query(id_: int) -> Query:
     }
     query = Query(
         '''
-        SELECT id, title, content, FROM notes WHERE id=:id;
+        SELECT id, title, content FROM notes WHERE id=:id;
         ''',
         bound_params,
     )
@@ -52,7 +52,7 @@ def get_note_by_id_query(id_: int) -> Query:
 def get_all_notes_query() -> Query:
     query = Query(
         '''
-        SELECT id, title FROM notes;
+        SELECT id, title, content FROM notes;
         '''
     )
 
