@@ -66,7 +66,8 @@ def delete_notes_by_id_query(id_: int) -> Query:
     }
     query = Query(
         '''
-        DELETE FROM notes WHERE id=:id;
+        DELETE FROM notes WHERE id=:id
+        RETURNING id;
         ''',
         bound_params,
     )
