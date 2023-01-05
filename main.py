@@ -30,12 +30,12 @@ async def get_note(note_id: int):
 
 @app.post("/api/v1/notes", status_code=201)
 async def post_note(note: NoteRequest):
-    create_note(
+    note_in_db = create_note(
         title=note.title,
         content=note.content
     )
-    # todo: return note_id
-    return note
+    if note_in_db:
+        return {'id': note_in_db.id}
 
 @app.put("/api/v1/notes/{note_id}")
 async def put_note(note_id: int, note: NoteRequest):
