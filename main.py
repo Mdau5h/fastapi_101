@@ -46,7 +46,7 @@ async def put_note(note_id: int, note: NoteRequest):
             title=note.title,
             content=note.content
         )
-        return
+        return get_note_by_id(note_id)
     raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
 @app.delete("/api/v1/notes/{note_id}", status_code=204)
