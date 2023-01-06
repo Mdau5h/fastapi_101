@@ -40,7 +40,7 @@ async def post_note(note: NoteRequest):
         content=note.content
     )
     if note_in_db:
-        return {'id': note_in_db.id}
+        return note_in_db
 
 @app.put("/api/v1/notes/{note_id}")
 async def put_note(note_id: int, note: NoteRequest):
@@ -58,7 +58,7 @@ async def put_note(note_id: int, note: NoteRequest):
 async def delete_note(note_id: int):
     note_in_db = delete_note_by_id(note_id)
     if note_in_db:
-        return {"deleted_id": note_in_db}
+        return {"id": note_in_db}
     raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
 def main() -> None:
