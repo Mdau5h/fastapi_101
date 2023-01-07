@@ -29,9 +29,11 @@
 
         <div id="notes" class="container">
 <!--            <div id="note" class="row mb-3 card text-bg-light mb-3" >-->
-<!--                <label class="form-check-label fs-2 mb-3 mt-1">-->
+<!--                <button onclick="deleteNote" type="button" class="btn-close" aria-label="Close" style="font-size: 20px; position: absolute;left: 1079px;-->
+<!--    top: 5px"></button>-->
+<!--                <label class="form-check-label fs-2 mb-1 mt-1">-->
 <!--                   This is the title-->
-<!--                    <button type="button" class="btn-close" aria-label="Close" style="font-size: 20px"></button>-->
+
 <!--                </label>-->
 <!--                <label class="form-check-label fs-6 mb-2 mt-1">-->
 <!--                    And this is an actual note-->
@@ -75,9 +77,10 @@
         function noteToHTML({id, title, content}) {
             const noteList = document.getElementById('notes')
             noteList.insertAdjacentHTML('beforeend', `<div id="note${id}" class="row mb-3 card text-bg-light mb-3" >
-                <label class="form-check-label fs-2 mb-3 mt-1">
+            <button onclick="deleteNote(${id})" type="button" class="btn-close" aria-label="Close" style="font-size: 20px; position: absolute;left: 1079px;
+    top: 5px"></button>
+                <label class="form-check-label fs-2 mb-1 mt-1">
                    ${title}
-                    <button onclick="deleteNote(${id})" type="button" class="btn-close" aria-label="Close" style="font-size: 20px"></button>
                 </label>
                 <label class="form-check-label fs-6 mb-2 mt-1">
                     ${content}
