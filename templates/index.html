@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mdau5h's Notebook</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="deleteToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Note deleted!
+            </div>
+        </div>
+     
+        <div id="createToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Note created!
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="mb-3 mt-5">Welcome to Mdau5h's Notebook!</h1>
+        <div class="row mb-3">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">My note will be called:</label>
+                <input id="noteTitle" type="text" class="form-control" placeholder="Title">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">So:</label>
+                <textarea id="noteContent" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Text..."></textarea>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button id="addNote" type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+
+
+        <div id="notes" class="container">
+        </div>
+    </div>
+    <script type="text/javascript" src="js/script.js" >
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -9,6 +9,8 @@ class Config(BaseSettings):
     APP_NAME: str = Field('mdau5h-notes', const=True)
 
     LOG_FILE: str
+    HOST: str
+    PORT: str
 
     @validator('LOG_FILE')
     def check_logfile_if_exists(cls, value):

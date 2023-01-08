@@ -19,10 +19,16 @@ def get_note_by_id(note_id: int) -> t.Optional[Note]:
             )
 
 
-def create_note(**kwargs) -> None:
+def create_note(**kwargs) -> t.Optional[Note]:
     q = create_note_query(**kwargs)
     with session() as s:
-        s.execute(q).fetchone()
+        r = s.execute(q).fetchone()
+        if r:
+            return Note(
+                id=r[0],
+                title=r[1],
+                content=r[2]
+            )
 
 def update_note(**kwargs) -> t.Optional[Note]:
     q = update_note_query(**kwargs)
@@ -48,7 +54,9 @@ def get_all_notes() -> list[Note]:
         return notes
 
 
-def delete_note_by_id(note_id: int) -> None:
+def delete_note_by_id(note_id: int) -> int:
     q = delete_notes_by_id_query(note_id)
     with session() as s:
-        s.execute(q).fetchone()
+        r = s.execute(q).fetchone()
+        if r:
+            return r[0]
