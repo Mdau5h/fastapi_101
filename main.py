@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
+from app.config import config
 
 import uvicorn
 import logging
@@ -61,11 +62,15 @@ async def delete_note(note_id: int):
         return {"id": note_in_db}
     raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
+@app.get("/js/{file_name}")
+async def return_js(file_name: str):
+    return FileResponse(f"js/{file_name}")
+
 def main() -> None:
     init_logging()
     init_db()
     logger.info('database is ready')
-    uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
+    uvicorn.run("main:app", port=int(config.PORT), host=config.HOST, reload=True)
 
 if __name__ == '__main__':
     main()

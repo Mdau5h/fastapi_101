@@ -8,6 +8,20 @@
 
 </head>
 <body>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="deleteToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Note deleted!
+            </div>
+        </div>
+     
+        <div id="createToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Note created!
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <h1 class="mb-3 mt-5">Welcome to Mdau5h's Notebook!</h1>
         <div class="row mb-3">
@@ -28,80 +42,11 @@
 
 
         <div id="notes" class="container">
-<!--            <div id="note" class="row mb-3 card text-bg-light mb-3" >-->
-<!--                <button onclick="deleteNote" type="button" class="btn-close" aria-label="Close" style="font-size: 20px; position: absolute;left: 1079px;-->
-<!--    top: 5px"></button>-->
-<!--                <label class="form-check-label fs-2 mb-1 mt-1">-->
-<!--                   This is the title-->
-
-<!--                </label>-->
-<!--                <label class="form-check-label fs-6 mb-2 mt-1">-->
-<!--                    And this is an actual note-->
-<!--                </label>-->
-<!--            </div>-->
         </div>
     </div>
-    <script type="text/javascript">
-        document.getElementById("addNote").addEventListener('click', async() => {
-            const inputTitle = document.getElementById("noteTitle");
-            const title = inputTitle.value;
-            const inputContent = document.getElementById("noteContent");
-            const content = inputContent.value;
-
-            if (inputTitle) {
-                if (inputContent){
-                    const res = await fetch("http://0.0.0.0:8000/api/v1/notes", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({title, content})
-                    });
-
-                    const note = await res.json();
-                    noteToHTML(note);
-                    inputTitle.value = '';
-                    inputContent.value = '';
-                }
-            }
-        })
-
-        async function getAllNotes(){
-            const res = await fetch("http://0.0.0.0:8000/api/v1/notes");
-            const notes = await res.json();
-            console.log(notes);
-            notes.forEach(note => noteToHTML(note))
-        }
-        window.addEventListener('DOMContentLoaded', getAllNotes)
-
-        function noteToHTML({id, title, content}) {
-            const noteList = document.getElementById('notes')
-            noteList.insertAdjacentHTML('beforeend', `<div id="note${id}" class="row mb-3 card text-bg-light mb-3" >
-            <button onclick="deleteNote(${id})" type="button" class="btn-close" aria-label="Close" style="font-size: 20px; position: absolute;left: 1079px;
-    top: 5px"></button>
-                <label class="form-check-label fs-2 mb-1 mt-1">
-                   ${title}
-                </label>
-                <label class="form-check-label fs-6 mb-2 mt-1">
-                    ${content}
-                </label>
-            </div>
-            `);
-        }
-
-        async function deleteNote(id) {
-            console.log(id);
-            const res = await fetch(`http://0.0.0.0:8000/api/v1/notes/${id}`,{
-            method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (res.status == 204) {
-                document.getElementById(`note${id}`).remove();
-            }
-        }
+    <script type="text/javascript" src="js/script.js" >
     </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>
