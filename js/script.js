@@ -38,7 +38,9 @@ function noteToHTML({id, title, content}) {
     const noteList = document.getElementById('notes')
     noteList.insertAdjacentHTML('beforeend',
     `<div id="note${id}" class="row mb-3 card text-bg-light mb-1">
-        <button onclick="deleteNote(${id})" type="button" class="btn-close" aria-label="Close" style="font-size: 20px; position: absolute; right: 5px; top: 5px"></button>
+        <div id="buttons${id}" style="font-size: 20px; position: absolute; right: -5px; top: 5px; width: fit-content;">
+            <button onclick="alertDelete(${id})" type="button" class="btn-close" aria-label="Close" ></button>
+        </div>
         <label class="form-check-label fs-2 mb-1 mt-1">
             ${title}
         </label>
@@ -48,6 +50,26 @@ function noteToHTML({id, title, content}) {
     </div>`
     );
 }
+
+
+function alertDelete(id){
+    if (document.getElementsByClassName("additional").length == 0) {
+        const noteToDelete = document.getElementById('buttons' + id);
+        noteToDelete.insertAdjacentHTML('afterBegin',`
+        <button onclick="deleteNote(${id})" type="button" class="btn btn-outline-danger .btn-xs additional" >Yes, I want to delete this note </button>
+        <button onclick="removeAdditionalButtons(${id})" type="button" class="btn btn-outline-secondary .btn-xs additional" >No, I don't really want to </button>
+        `
+        );
+    }
+}
+
+function removeAdditionalButtons(id){
+    var buttonsToRemove = document.querySelectorAll('.additional');
+    buttonsToRemove.forEach(x => {
+        x.remove();
+    });
+}
+
 
 async function deleteNote(id) {
     console.log(id);
