@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException, Request
+import time
+
+from fastapi import FastAPI, HTTPException, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from app.config import config
@@ -18,6 +20,19 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
+
+def write_note(note: NoteRequest):
+    time.sleep(10)
+    note_in_db = create_note(
+        title=note.title,
+        content=note.content
+    )
+
+    if note_in_db:
+        return note_in_db
+
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     context = {'request': request}
@@ -35,13 +50,13 @@ async def get_note(note_id: int):
     raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
 @app.post("/api/v1/notes", status_code=201)
-async def post_note(note: NoteRequest):
-    note_in_db = create_note(
-        title=note.title,
-        content=note.content
-    )
-    if note_in_db:
-        return note_in_db
+async def post_note(note: NoteRequest, background_tasks: BackgroundTasks):
+    background_tasks.add_task(write_note, note)
+    return {"id": 0,
+            "title": "Note created!",
+            "content": "it'll appear right away"
+            }
+
 
 @app.put("/api/v1/notes/{note_id}")
 async def put_note(note_id: int, note: NoteRequest):
