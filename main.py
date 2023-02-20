@@ -57,10 +57,11 @@ async def put_note(note_id: int, note: NoteRequest):
 
 @app.delete("/api/v1/notes/{note_id}", status_code=204)
 async def delete_note(note_id: int):
-    note_in_db = delete_note_by_id(note_id)
-    if note_in_db:
-        return {"id": note_in_db}
-    raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
+    delete_note_by_id(note_id)
+    # note_in_db = delete_note_by_id(note_id)
+    # if note_in_db:
+    #     return {"id": note_in_db}
+    # raise HTTPException(status_code=404, detail=f"Note with id == '{note_id}' does not exist!")
 
 @app.get("/js/{file_name}")
 async def return_js(file_name: str):

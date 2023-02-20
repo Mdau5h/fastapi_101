@@ -11,7 +11,7 @@ def create_note_query(title: str, content: str) -> Query:
         '''
         INSERT INTO notes(title, content)
         VALUES(:title, :content)
-        RETURNING id, title, content;
+        RETURNING *;
         ''',
         bound_params,
     )
@@ -66,8 +66,7 @@ def delete_notes_by_id_query(id_: int) -> Query:
     }
     query = Query(
         '''
-        DELETE FROM notes WHERE id=:id
-        RETURNING id;
+        DELETE FROM notes WHERE id=:id;
         ''',
         bound_params,
     )
