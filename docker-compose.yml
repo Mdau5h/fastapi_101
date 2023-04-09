@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: postgres:13.3
+    container_name: notes_pg
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+#      - "${DB_MASTER_PG_PORT}:5432"
+      - "5432:5432"
+
+#  server:
+#    build: .
+#    container_name: fast_api
+#    ports:
+#      - "8000:8000"

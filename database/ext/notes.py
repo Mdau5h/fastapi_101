@@ -1,8 +1,6 @@
 import typing as t
-from database.session import session
-
-
-from database.models import Note
+from database.session import session_factory as session
+from app.pydantic_models import Note
 from database.raw.notes import create_note_query, get_all_notes_query, get_note_by_id_query, \
     delete_notes_by_id_query, update_note_query
 
@@ -30,6 +28,7 @@ def create_note(**kwargs) -> t.Optional[Note]:
                 content=r[2]
             )
 
+
 def update_note(**kwargs) -> t.Optional[Note]:
     q = update_note_query(**kwargs)
     with session() as s:
@@ -40,6 +39,7 @@ def update_note(**kwargs) -> t.Optional[Note]:
                 title=r[1],
                 content=r[2]
             )
+
 
 def get_all_notes() -> list[Note]:
     q = get_all_notes_query()

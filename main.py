@@ -6,8 +6,8 @@ from app.config import config
 import uvicorn
 import logging
 
-from database.create import rollout as init_db
-from database.models import NoteRequest
+# from database.create import rollout as init_db
+from app.pydantic_models import NoteRequest
 from database.ext.notes import get_note_by_id, create_note, get_all_notes, delete_note_by_id, update_note
 
 from app.logger import init_logging
