@@ -19,13 +19,13 @@ class Config(BaseSettings):
     DB_PG_BASENAME: str
 
     @property
-    def DB_PG_URL(self, db_name):
+    def DB_PG_URL(self):
         return 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}'.format(
             user=self.DB_PG_USERNAME,
             password=self.DB_PG_PASSWORD,
             host=self.DB_PG_HOST,
             port=self.DB_MASTER_PG_PORT,
-            db_name=self.DB_PG_BASENAME,
+            db_name=self.DB_PG_BASENAME
         )
 
     @validator('LOG_FILE')
