@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field
 
-class Note(BaseModel):
+class NoteModel(BaseModel):
     id: int
     title: str = Field(..., max_length=50)
     content: str = Field(...)
 
-class NoteRequest(BaseModel):
+class NoteRequestModel(BaseModel):
     title: str = Field(..., max_length=50)
     content: str = Field(...)
