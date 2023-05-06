@@ -1,9 +1,11 @@
+from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from app.config import config
 
 
-def session_factory():
-    engine = create_engine(config.DB_PG_URL, echo=True)
-    db_session = sessionmaker(bind=engine)
-    return db_session()
+engine = create_engine(config.DB_PG_URL, echo=True)
+
+def session_factory() -> Session:
+    db_session = sessionmaker(engine)
+    with db_session() as session:
+        return session
